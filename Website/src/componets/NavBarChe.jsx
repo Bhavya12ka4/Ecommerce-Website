@@ -10,6 +10,14 @@ function NavBarChe() {
         { id: 1, name: "Butter Chicken", price: 250, quantity: 2, image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=200&q=80" },
         { id: 2, name: "Tandoori Roti", price: 15, quantity: 5, image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=200&q=80" }
     ];
+
+    // 3. Create the scroll handler
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
     return (
         <>
             <nav className="bg-black/60 backdrop-blur-sm text-lightWritingColor flex justify-around text-[15px] items-center p-1.5 fixed w-full top-0 z-30">
@@ -23,9 +31,9 @@ function NavBarChe() {
 
                 <div>
                     <ol className='flex justify-center gap-5 '>
-                        <li className='cursor-pointer hover:text-white/50'>Home</li>
-                        <li className='cursor-pointer hover:text-white/50'>Menu</li>
-                        <li className='cursor-pointer hover:text-white/50'>Contant</li>
+                        <li className='cursor-pointer hover:text-white/50' onClick={() => scrollToSection('Home')}>Home</li>
+                        <li className='cursor-pointer hover:text-white/50' onClick={() => scrollToSection('Menu')}>Menu</li>
+                        <li className='cursor-pointer hover:text-white/50' onClick={() => scrollToSection('Contant')}>Contant</li>
                     </ol>
                 </div>
 
@@ -38,14 +46,20 @@ function NavBarChe() {
                         🛒 Cart
                     </button> */}
                     {/* 4. Render the Cart Component */}
-                    <CartDrawer
+                    {/* <CartDrawer
                         isOpen={isCartOpen}
                         onClose={() => setIsCartOpen(false)}
                         cartItems={sampleCart}
-                    />
+                    />*/}
                 </div>
 
             </nav>
+            <CartDrawer
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                cartItems={sampleCart}
+            />
+
         </>
     )
 }

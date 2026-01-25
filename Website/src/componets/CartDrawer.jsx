@@ -10,7 +10,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [] }) => {
     <>
       {/* 1. The Dark Backdrop (Clicking this closes the drawer) */}
       <div 
-        className={`fixed inset-0 bg-black/70 z-40 transition-opacity duration-300 backdrop-blur-sm ${
+        className={`fixed inset-0 !bg-black/20 z-40 transition-opacity duration-300 backdrop-blur-[5px] ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         onClick={onClose}

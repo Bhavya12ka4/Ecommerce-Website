@@ -19,7 +19,7 @@ function HeroPosterPage() {
     ];
     return (
         <>
-            <div className="h-screen relative bg-black" >
+            <div id='Home' className="h-screen relative -scroll-mt-8 bg-black" >
                 <div className="absolute inset-0 h-screen w-full bg-[url('/muttonCurryPhoto4.jpg')] bg-cover bg-center opacity-40 flex"></div>
 
                 <div className="relative h-screen w-full z-20 p-35 pl-50 flex flex-col  gap-5">

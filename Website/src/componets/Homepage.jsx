@@ -59,19 +59,23 @@ function Homepage() {
                 <div
                     className="absolute bottom-0 left-0 w-full h-60 bg-linear-to-t from-black via-black/60 to-black/0  pointer-events-none z-20"
                 ></div>
-                <SmallBar selectedCategory = {selectedCategory} setSelectedCategory = {setSelectedCategory} />
+                <SmallBar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} menuItems={menuItems} />
 
-                <div className="flex flex-wrap m-15  justify-center gap-7 ">
+
+                <div className="flex flex-wrap m-15  justify-center gap-7 scroll-mt-55" id="Menu">
 
 
 
                     {/* This loop creates a component for every item in your database */}
-                    {menuItems.map((item) => (
-                        <OrderComponets
-                            key={item.id}
-                            itemData={item} // We pass the data here
-                        />
-                    ))}
+                    {menuItems.filter((item) => selectedCategory === 'All' || item.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()).map((item) => {
+                        return (
+                            < OrderComponets
+                                key={item.id}
+                                itemData={item} // We pass the data here
+                            />
+                        );
+
+                    })}
                 </div>
 
             </div>

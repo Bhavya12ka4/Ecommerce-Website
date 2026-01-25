@@ -117,7 +117,7 @@ const menuData = [
     name: "Chicken Curry",
     description: "Homestyle rustic chicken curry cooked with traditional spices.",
     price: 200,
-    category: "Chicken Mains",
+    category: "Chicken",
     spiceLevel: "Medium",
     image: "/images/chicken-curry.jpg",
     isVeg: false
@@ -127,7 +127,7 @@ const menuData = [
     name: "Chicken Leg Curry",
     description: "A special curry featuring tender whole chicken legs simmered in gravy.",
     price: 250,
-    category: "Chicken Mains",
+    category: "Chicken",
     spiceLevel: "Medium",
     image: "/images/chicken-leg-curry.jpg",
     isVeg: false
@@ -137,7 +137,7 @@ const menuData = [
     name: "Chicken Champaran",
     description: "The signature Ahuna meat—slow-cooked in a sealed clay pot with whole garlic bulbs.",
     price: 300,
-    category: "Chicken Mains",
+    category: "Chicken",
     spiceLevel: "Hot",
     image: "/images/chicken-champaran.jpg",
     isVeg: false
@@ -147,7 +147,7 @@ const menuData = [
     name: "Kolhapuri Chicken Curry",
     description: "A bold and fiery curry from Maharashtra made with roasted chili and coconut.",
     price: 300,
-    category: "Chicken Mains",
+    category: "Chicken",
     spiceLevel: "Hot",
     image: "/images/kolhapuri-chicken.jpg",
     isVeg: false
@@ -157,7 +157,7 @@ const menuData = [
     name: "Rajasthani Chicken Curry",
     description: "Spicy and robust chicken curry cooked in the traditional Rajasthani style.",
     price: 300,
-    category: "Chicken Mains",
+    category: "Chicken",
     spiceLevel: "Hot",
     image: "/images/rajasthani-chicken.jpg",
     isVeg: false
@@ -169,7 +169,7 @@ const menuData = [
     name: "Mutton Curry",
     description: "Classic slow-cooked mutton curry with deep flavors and tender meat.",
     price: 250,
-    category: "Mutton Mains",
+    category: "Mutton",
     spiceLevel: "Medium",
     image: "/images/mutton-curry.jpg",
     isVeg: false
@@ -179,7 +179,7 @@ const menuData = [
     name: "Mutton Chaap Curry",
     description: "Rich gravy made with mutton ribs (chaap), slow-cooked to perfection.",
     price: 300,
-    category: "Mutton Mains",
+    category: "Mutton",
     spiceLevel: "Medium",
     image: "/images/mutton-chaap.jpg",
     isVeg: false
@@ -189,7 +189,7 @@ const menuData = [
     name: "Mutton Champaran",
     description: "Tender mutton slow-cooked in mustard oil and whole spices in a clay handi.",
     price: 350,
-    category: "Mutton Mains",
+    category: "Mutton",
     spiceLevel: "Medium",
     image: "/images/mutton-champaran.jpg",
     isVeg: false
@@ -199,7 +199,7 @@ const menuData = [
     name: "Kolhapuri Mutton Curry",
     description: "Spicy mutton curry with the distinctive heat of Kolhapuri chilies.",
     price: 350,
-    category: "Mutton Mains",
+    category: "Mutton",
     spiceLevel: "Hot",
     image: "/images/kolhapuri-mutton.jpg",
     isVeg: false
@@ -209,7 +209,7 @@ const menuData = [
     name: "Mutton Laal Maas",
     description: "A legendary Rajasthani curry with a fiery red color and intense chili heat.",
     price: 350,
-    category: "Mutton Mains",
+    category: "Mutton",
     spiceLevel: "Hot",
     image: "/images/lal-maas.jpg",
     isVeg: false
@@ -313,7 +313,7 @@ const menuData = [
     name: "Fish Curry",
     description: "Tender fish pieces cooked in a tangy and spicy masala gravy.",
     price: 300,
-    category: "Egg/Seafood",
+    category: "Seafood",
     spiceLevel: "Medium",
     image: "/images/fish-curry.jpg",
     isVeg: false
@@ -323,7 +323,7 @@ const menuData = [
     name: "Jinga Curry",
     description: "Succulent prawns cooked in a traditional curry sauce.",
     price: 350,
-    category: "Egg/Seafood",
+    category: "Seafood",
     spiceLevel: "Medium",
     image: "/images/jinga-curry.jpg",
     isVeg: false
@@ -333,7 +333,7 @@ const menuData = [
     name: "Jinga Masala",
     description: "Prawns tossed in a thick, spicy, semi-dry masala.",
     price: 350,
-    category: "Egg/Seafood",
+    category: "Seafood",
     spiceLevel: "Hot",
     image: "/images/jinga-masala.jpg",
     isVeg: false
@@ -547,13 +547,13 @@ const menuData = [
     isVeg: false
   },
 
-  // --- EXTRAS ---
+  // --- Sides ---
   {
     id: 53,
     name: "Roti",
     description: "Freshly baked tandoori roti.",
     price: 10,
-    category: "Extras",
+    category: "Sides",
     spiceLevel: null,
     image: "/images/roti.jpg",
     isVeg: true
@@ -563,7 +563,7 @@ const menuData = [
     name: "Butter Roti",
     description: "Tandoori roti topped with butter.",
     price: 15,
-    category: "Extras",
+    category: "Sides",
     spiceLevel: null,
     image: "/images/butter-roti.jpg",
     isVeg: true
@@ -573,7 +573,7 @@ const menuData = [
     name: "Rotlo",
     description: "Traditional thick millet flatbread.",
     price: 30,
-    category: "Extras",
+    category: "Sides",
     spiceLevel: null,
     image: "/images/rotlo.jpg",
     isVeg: true
@@ -583,7 +583,7 @@ const menuData = [
     name: "Chaasa (Buttermilk)",
     description: "Cool and refreshing spiced buttermilk.",
     price: 20,
-    category: "Extras",
+    category: "Sides",
     spiceLevel: null,
     image: "/images/chaas.jpg",
     isVeg: true
@@ -593,7 +593,7 @@ const menuData = [
     name: "Fried Papad",
     description: "Crispy fried papadum.",
     price: 20,
-    category: "Extras",
+    category: "Sides",
     spiceLevel: null,
     image: "/images/papad.jpg",
     isVeg: true

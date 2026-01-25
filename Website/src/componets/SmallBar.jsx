@@ -1,7 +1,9 @@
 import React from 'react'
 
-function SmallBar({ selectedCategory, setSelectedCategory }) {
+function SmallBar({ selectedCategory, setSelectedCategory, menuItems }) {
     const categories = ['All', 'Chicken', 'Mutton','Seafood', 'Sides'];
+
+
     return (
         <>
             <div className='bg-black flex justify-around  text-BrightWritingColor '>
