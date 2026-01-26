@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import CartDrawer from "./CartDrawer";
 
-function NavBarChe() {
+function NavBarChe({sampleCart,setSampleCart}) {
     // 1. State for opening/closing the cart
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     // 2. Sample Cart Data (Later you will manage this with real state)
-    const sampleCart = [
-        { id: 1, name: "Butter Chicken", price: 250, quantity: 2, image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=200&q=80" },
-        { id: 2, name: "Tandoori Roti", price: 15, quantity: 5, image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=200&q=80" }
-    ];
 
     // 3. Create the scroll handler
     const scrollToSection = (sectionId) => {

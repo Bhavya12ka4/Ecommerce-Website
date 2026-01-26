@@ -1,13 +1,14 @@
 import React from 'react'
 
 // 1. Fixed typo: changed 'iteamData' to 'itemData'
-function OrderComponets({ itemData }) {
+function OrderComponets({ itemData,addToCart }) {
 
     const spiceIcons = {
         "Mild": "🌶️",
         "Medium": "🌶️🌶️",
         "Hot": "🌶️🌶️🌶️"
     };
+
 
     // Safety check: If data hasn't loaded yet, don't break the app
     if (!itemData) return null;
@@ -21,7 +22,7 @@ function OrderComponets({ itemData }) {
                 <div
                     className="h-[150px] w-86 flex bg-cover bg-center rounded-t-2xl border-none text-BrightWritingColor gap-3"
                     style={{ backgroundImage: `url(${itemData.image})` }}
-                    // style={{ backgroundImage: `url(${'muttonCurryPhoto.jpg'})`, backgroundSize: 'fit' }}
+                // style={{ backgroundImage: `url(${'muttonCurryPhoto.jpg'})`, backgroundSize: 'fit' }}
                 >
 
                     {/* Dynamic Category */}
@@ -54,7 +55,8 @@ function OrderComponets({ itemData }) {
                             {/* Dynamic Price */}
                             <div className="text-lg font-semibold">₹{itemData.price}</div>
                         </div>
-                        <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer transition-colors active:scale-90 transition-transform duration-500 ease-in-out ">
+                        <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer transition-colors active:scale-90 duration-500 ease-in-out " 
+                        onClick={()=> addToCart(itemData)}>
                             ADD
                         </button>
                     </div>

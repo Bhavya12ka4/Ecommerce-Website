@@ -13,6 +13,34 @@ function Homepage() {
     const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('All');
 
+    const [sampleCart, setSampleCart] = useState([
+        { id: 59, name: "Butter Chicken", price: 250, quantity: 2, image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=200&q=80" },
+        { id: 60, name: "Tandoori Roti", price: 15, quantity: 0, image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=200&q=80" }
+    ]);
+
+    const handleAddToCart = (itemData) => {
+        setSampleCart((prevCart) => {
+            const existingItem = prevCart.find((item) => item.id === itemData.id);
+            console.log("Adding to cart:", itemData);
+
+            if (existingItem) {
+                return prevCart.map((item) =>
+                    item.id === itemData.id
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                );
+            } else {
+                const newItem = {
+                    id: itemData.id,
+                    name: itemData.name,
+                    price: itemData.price,
+                    quantity: 1,
+                    image: itemData.image
+                };
+                return [...prevCart, newItem];
+            }
+        });
+    };
     // 2. Fetch the data when the component loads
     useEffect(() => {
         fetch('http://localhost:5000/api/menu') // The URL of your backend
@@ -54,7 +82,7 @@ function Homepage() {
         <>
             <div className="h-auto bg-black">
 
-                <NavBarChe />
+                <NavBarChe sampleCart={sampleCart} setSampleCart={setSampleCart} />
                 <HeroPosterPage />
                 <div
                     className="absolute bottom-0 left-0 w-full h-60 bg-linear-to-t from-black via-black/60 to-black/0  pointer-events-none z-20"
@@ -72,6 +100,7 @@ function Homepage() {
                             < OrderComponets
                                 key={item.id}
                                 itemData={item} // We pass the data here
+                                addToCart={handleAddToCart}
                             />
                         );
 
