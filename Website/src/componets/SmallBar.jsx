@@ -28,10 +28,7 @@ function SmallBar({ selectedCategory, setSelectedCategory, menuItems }) {
                             {category}
                         </button>
                     ))}
-                    {/* <div ><button className='bg-white/8 p-2 px-4 rounded-full hover:bg-white/10 cursor-pointer' active:bg-[rgb(214,58,31)] focus:bg-[rgb(214,58,31)]'>All</button></div> 
-                    <div><button className='bg-white/8 p-2 px-4 rounded-full hover:bg-white/10 cursor-pointer active:bg-[rgb(214,58,31)] focus:bg-[rgb(214,58,31)]'>Chicken</button></div>
-                    <div><button className='bg-white/8 p-2 px-4 rounded-full hover:bg-white/10 cursor-pointer active:bg-[rgb(214,58,31)] focus:bg-[rgb(214,58,31)]'>Mutton</button></div>
-                    <div><button className='bg-white/8 p-2 px-4 rounded-full hover:bg-white/10 cursor-pointer active:bg-[rgb(214,58,31)] focus:bg-[rgb(214,58,31)]'>Sides</button></div> */}
+                    
                 </div>
             </div>
         </>

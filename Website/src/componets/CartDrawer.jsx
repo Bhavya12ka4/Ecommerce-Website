@@ -1,32 +1,31 @@
 import React from 'react';
+import QuantityControl from './QuantityControl';
 import { X, Trash2, ShoppingBag, Plus, Minus } from 'lucide-react';
 
-const CartDrawer = ({ isOpen, onClose, cartItems = [] }) => {
-  
+const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, handleRemoveItem, scrollToSection }) => {
+
   // Calculate total price automatically
   const totalAmount = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (
     <>
       {/* 1. The Dark Backdrop (Clicking this closes the drawer) */}
-      <div 
-        className={`fixed inset-0 !bg-black/20 z-40 transition-opacity duration-300 backdrop-blur-[5px] ${
-          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
+      <div
+        className={`fixed inset-0 !bg-black/20 z-40 transition-opacity duration-300 backdrop-blur-[5px] ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          }`}
         onClick={onClose}
       ></div>
 
       {/* 2. The Sliding Drawer Panel */}
-      <div 
-        className={`fixed top-0 right-0 h-screen w-100 bg-zinc-900 z-50 shadow-2xl transform transition-transform duration-300 border-l border-zinc-800 flex flex-col ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+      <div
+        className={`fixed top-0 right-0 h-screen w-100 bg-zinc-900 z-50 shadow-2xl transform transition-transform duration-300 border-l border-zinc-800 flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
-        
+
         {/* --- HEADER --- */}
         <div className="flex items-center justify-between p-6 border-b border-zinc-800 bg-zinc-900">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <ShoppingBag className="text-orange-500" /> 
+            <ShoppingBag className="text-orange-500" />
             Your Cart <span className="text-sm font-normal text-gray-400">({cartItems.length})</span>
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">
@@ -36,41 +35,38 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [] }) => {
 
         {/* --- SCROLLABLE CONTENT --- */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          
+
           {cartItems.length === 0 ? (
             <div className="h-200 flex flex-col items-center justify-center text-center text-gray-500 space-y-4">
               <ShoppingBag size={48} className="opacity-20" />
               <p>Your cart is empty.</p>
-              <button onClick={onClose} className="text-orange-500 font-medium hover:underline">Start Ordering</button>
+              <button className="text-orange-500 font-medium hover:underline"
+                onClick={() => {
+                  onClose();              // 1. Close the drawer
+                  scrollToSection('Menu'); // 2. Scroll to the menu
+                }}>Start Ordering </button>
             </div>
           ) : (
             cartItems.map((item) => (
-              <div key={item.id} className="flex gap-4">
-                {/* Image */}
-                <div className="h-20 w-20 rounded-lg overflow-hidden bg-zinc-800 flex-shrink-0">
-                  <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
-                </div>
-                
-                {/* Details */}
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-white font-medium line-clamp-1">{item.name}</h3>
-                    <p className="text-sm text-gray-400">₹{item.price}</p>
+              item.quantity > 0 ? (
+                <div key={item.id} className="flex gap-4">
+                  {/* Image */}
+                  <div className="h-20 w-20 rounded-lg overflow-hidden bg-zinc-800 flex-shrink-0">
+                    <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
                   </div>
-                  
-                  {/* Quantity Controls */}
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-3 bg-zinc-800 rounded px-2 py-1">
-                      <button className="text-gray-400 hover:text-white"><Minus size={14} /></button>
-                      <span className="text-white text-sm font-medium">{item.quantity}</span>
-                      <button className="text-gray-400 hover:text-white"><Plus size={14} /></button>
+
+                  {/* Details */}
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-white font-medium line-clamp-1">{item.name}</h3>
+                      <p className="text-sm text-gray-400">₹{item.price}</p>
                     </div>
-                    <button className="text-red-500/80 hover:text-red-500 transition-colors">
-                      <Trash2 size={18} />
-                    </button>
+
+                    <QuantityControl quantity={item.quantity} item={item} handleQuantityChange={handleQuantityChange} handleRemoveItem={handleRemoveItem} value={1} />
                   </div>
                 </div>
-              </div>
+              )
+                : null
             ))
           )}
         </div>

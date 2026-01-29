@@ -1,7 +1,10 @@
 import React from 'react'
+import QuantityControl from './QuantityControl';
+
 
 // 1. Fixed typo: changed 'iteamData' to 'itemData'
-function OrderComponets({ itemData,addToCart }) {
+function OrderComponets({ itemData, addToCart, currentQuatity ,handleQuantityChange,handleRemoveItem}) 
+{
 
     const spiceIcons = {
         "Mild": "🌶️",
@@ -49,16 +52,28 @@ function OrderComponets({ itemData,addToCart }) {
                         {itemData.description}
                     </div>
 
-                    <div className="flex justify-between items-center mt-2">
+                    <div className="flex justify-between items-center mt-2 relative">
                         <div>
                             <div className="text-[12px] text-white/50 mb-[-3px]">Price</div>
-                            {/* Dynamic Price */}
                             <div className="text-lg font-semibold">₹{itemData.price}</div>
                         </div>
-                        <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer transition-colors active:scale-90 duration-500 ease-in-out " 
-                        onClick={()=> addToCart(itemData)}>
-                            ADD
-                        </button>
+                        <div className='absolute bottom-0 right-0'>
+
+                        {currentQuatity > 0
+                            ? <QuantityControl
+                            item={itemData}
+                            handleQuantityChange={handleQuantityChange}
+                            handleRemoveItem={handleRemoveItem}
+                            quantity={currentQuatity} 
+                            value ={0} />
+                            
+                            :
+                            <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer transition-colors active:scale-90 duration-500 ease-in-out "
+                            onClick={() => addToCart(itemData)}> 
+                                ADD 
+                            </button>}
+                        </div>
+
                     </div>
                 </div>
             </div>

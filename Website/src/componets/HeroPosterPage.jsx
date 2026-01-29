@@ -2,7 +2,16 @@ import React from 'react'
 import FrontPageBasic from './FrontPageBasic';
 
 
-function HeroPosterPage() {
+function HeroPosterPage({scrollToSection}) {
+    
+    // Scroll to section function
+    // const scrollToSection = (sectionId) => {
+    //     const element = document.getElementById(sectionId);
+    //     if (element) {
+    //         element.scrollIntoView({ behavior: 'smooth' });
+    //     }
+    // };
+
     const infoItems = [
         {
             title: "Spice levels",
@@ -30,8 +39,8 @@ function HeroPosterPage() {
                     <div className="text-white/80 text-[19px]">Chicken, mutton, and seafood—slow-simmered, charcoal-kissed, and served with <br />a heat you can feel.</div>
 
                     <div className="flex gap-3 text-BrightWritingColor">
-                        <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer">Order Now</button>
-                        <button className="bg-white/12 hover:bg-white/15 p-3 rounded-full px-5 text-[15px] font-medium border border-white/10 cursor-pointer">Explore Menu</button>
+                        <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer" onClick={() => scrollToSection('Home')} >Order Now</button>
+                        <button className="bg-white/12 hover:bg-white/15 p-3 rounded-full px-5 text-[15px] font-medium border border-white/10 cursor-pointer menu" onClick={() => scrollToSection('Menu')} >Explore Menu</button>
                     </div>
 
                     <div className="text-white flex gap-5">
