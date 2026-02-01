@@ -353,7 +353,7 @@ import { X, ShoppingBag, ArrowLeft, CheckCircle, User, MapPin } from 'lucide-rea
 const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, handleRemoveItem, scrollToSection, clearCart }) => {
 
   // ⚠️ USE YOUR LIVE URL (or Laptop IP if testing locally)
-  const API_URL = "http://192.168.1.9:5000";
+  const API_URL = "https://kookduku-backend.onrender.com";
 
   const [view, setView] = useState('cart');
 
