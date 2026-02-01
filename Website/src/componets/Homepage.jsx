@@ -164,7 +164,7 @@ import FooterSection from "./FooterSection.jsx";
 
 function Homepage() {
     // ⚠️ CRITICAL: Must match your computer's IP for phone testing
-    const API_URL = "http://192.168.1.9:5000"; 
+    const API_URL = "https://kookduku-backend.onrender.com"; 
 
     const [menuItems, setMenuItems] = useState([]);
     const [loading, setLoading] = useState(true);

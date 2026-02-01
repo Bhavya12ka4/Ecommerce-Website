@@ -186,7 +186,7 @@ import QuantityControl from './QuantityControl';
 function OrderComponets({ itemData, addToCart, currentQuatity, handleQuantityChange, handleRemoveItem }) {
 
     // ⚠️ CRITICAL: Must match your backend IP
-    const API_URL = "http://192.168.1.5:5000";
+    const API_URL = "https://kookduku-backend.onrender.com";
 
     const spiceIcons = {
         "Mild": "🌶️",
