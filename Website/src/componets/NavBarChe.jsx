@@ -48,7 +48,7 @@
 import React, { useState } from 'react';
 import CartDrawer from "./CartDrawer";
 
-function NavBarChe({ sampleCart, setSampleCart, handleQuantityChange, handleRemoveItem, scrollToSection }) {
+function NavBarChe({ sampleCart, setSampleCart, handleQuantityChange, handleRemoveItem, scrollToSection,clearCart }) {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     return (
@@ -75,7 +75,7 @@ function NavBarChe({ sampleCart, setSampleCart, handleQuantityChange, handleRemo
                         {/* Fixed HTML: Moved onClick to the <li> and removed extra <button> */}
                         <li className='cursor-pointer hover:text-white transition-colors' onClick={() => scrollToSection('Home')}>Home</li>
                         <li className='cursor-pointer hover:text-white transition-colors' onClick={() => scrollToSection('Menu')}>Menu</li>
-                        <li className='cursor-pointer hover:text-white transition-colors' onClick={() => scrollToSection('Contant')}>Contact</li>
+                        <li className='cursor-pointer hover:text-white transition-colors' onClick={() => scrollToSection('Contact')}>Contact</li>
                     </ol>
                 </div>
 
@@ -107,6 +107,7 @@ function NavBarChe({ sampleCart, setSampleCart, handleQuantityChange, handleRemo
                 handleQuantityChange={handleQuantityChange}
                 handleRemoveItem={handleRemoveItem}
                 scrollToSection={scrollToSection}
+                clearCart={clearCart}
             />
         </>
     )
