@@ -637,9 +637,9 @@ const app = express();
 // Middleware
 // app.use(cors());
 app.use(cors({
-    origin: '*', // Allows all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: '*', // Allows your Vercel site to access the backend
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
 app.use('/images', express.static('images'));
