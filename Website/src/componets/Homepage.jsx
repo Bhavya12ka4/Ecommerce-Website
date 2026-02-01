@@ -4,6 +4,7 @@ import SmallBar from "./SmallBar.jsx";
 import OrderComponets from "./OrderComponets.jsx";
 import React, { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
+import FooterSection from "./FooterSection.jsx";
 
 
 function Homepage() {
@@ -71,7 +72,7 @@ function Homepage() {
 
     // Fetch the data when the component loads
     useEffect(() => {
-        fetch('http://localhost:5000/api/menu') // The URL of your backend
+        fetch('/api/menu') // The URL of your backend
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch menu data');
@@ -117,16 +118,15 @@ function Homepage() {
                     handleRemoveItem={handleRemoveItem} 
                     scrollToSection={scrollToSection}/>
                 <HeroPosterPage scrollToSection={scrollToSection}/>
-                <div
+                {/* <div
                     className="absolute bottom-0 left-0 w-full h-60 bg-linear-to-t from-black via-black/60 to-black/0  pointer-events-none z-20"
-                ></div>
+                ></div> */}
+
+                {/* <div className="absolute bottom-0 left-0 w-full h-60 bg-linear-to-t from-black via-black/60 to-black/0 pointer-events-none z-20"></div> */}
                 <SmallBar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} menuItems={menuItems} />
 
 
-                <div className="flex flex-wrap m-15  justify-center gap-7 scroll-mt-55" id="Menu">
-
-
-
+                <div className="flex flex-wrap m-5 md:m-15 justify-center gap-7 scroll-mt-85  md:scroll-mt-55" id="Menu">
                     {/* This loop creates a component for every item in your database */}
                     {menuItems.filter((item) => selectedCategory === 'All' || item.category.trim().toLowerCase() === selectedCategory.trim().toLowerCase()).map((item) => {
                         const existingItem = sampleCart.find((item1) => item1.id === item.id);
@@ -144,6 +144,7 @@ function Homepage() {
 
                     })}
                 </div>
+                <FooterSection />
 
             </div>
         </>

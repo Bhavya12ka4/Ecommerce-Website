@@ -6,6 +6,24 @@
     --color-BrightWritingColor: #f5efe6;
 
 }
+
+html, body {
+  overflow-x: hidden; /* Cuts off any side-scrolling */
+  width: 100%;
+}
+
+/* 1. Disable text selection globally */
+html, body {
+  -webkit-user-select: none; /* Safari/Chrome */
+  user-select: none;         /* Standard */
+  -webkit-tap-highlight-color: transparent; /* Removes blue flash on tap */
+}
+
+/* 2. IMPORTANT: Re-enable selection for inputs so people can type! */
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
 /* Wrap your custom styles in the 'base' layer */
 @layer base {
   * {

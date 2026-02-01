@@ -1,10 +1,95 @@
-import React from 'react'
+// import React from 'react'
+// import QuantityControl from './QuantityControl';
+
+
+// // 1. Fixed typo: changed 'iteamData' to 'itemData'
+// function OrderComponets({ itemData, addToCart, currentQuatity ,handleQuantityChange,handleRemoveItem}) 
+// {
+
+//     const spiceIcons = {
+//         "Mild": "🌶️",
+//         "Medium": "🌶️🌶️",
+//         "Hot": "🌶️🌶️🌶️"
+//     };
+
+
+//     // Safety check: If data hasn't loaded yet, don't break the app
+//     if (!itemData) return null;
+
+//     return (
+//         <>
+//             <div className="border bg-BrightWritingColor/10 border-white/10 rounded-[15px] flex-col w-86 cursor-pointer">
+
+//                 {/* 2. Dynamic Background Image */}
+//                 {/* We use style={{}} for dynamic images because Tailwind class names can't accept variables easily */}
+//                 <div
+//                     className="h-[150px] w-86 flex bg-cover bg-center rounded-t-2xl border-none text-BrightWritingColor gap-3"
+//                     style={{ backgroundImage: `url(${itemData.image})` }}
+//                 // style={{ backgroundImage: `url(${'muttonCurryPhoto.jpg'})`, backgroundSize: 'fit' }}
+//                 >
+
+//                     {/* Dynamic Category */}
+//                     <div className="bg-black/40 h-fit m-1 ml-3 p-1 px-2 rounded-md text-[12px] cursor-pointer hover:bg-black/90 backdrop-blur-sm">
+//                         {itemData.category}
+//                     </div>
+
+//                     {/* Dynamic Spice Level (Only shows if spiceLevel exists) */}
+//                     {itemData.spiceLevel && (
+//                         <div className="bg-black/40 h-fit m-1 p-1 px-2 rounded-md text-[12px] hover:bg-black/90 backdrop-blur-sm flex items-center gap-1 cursor-pointer">
+//                             {itemData.spiceLevel} {spiceIcons[itemData.spiceLevel]}
+//                         </div>
+//                     )}
+//                 </div>
+
+//                 <div className="text-BrightWritingColor box-content flex p-4 flex-col gap-2">
+//                     {/* 3. Dynamic Name */}
+//                     <div className="text-[20px] font-medium leading-tight">
+//                         {itemData.name}
+//                     </div>
+
+//                     {/* Dynamic Description */}
+//                     <div className="text-[13px] text-lightWritingColor h-10 overflow-hidden text-ellipsis line-clamp-2">
+//                         {itemData.description}
+//                     </div>
+
+//                     <div className="flex justify-between items-center mt-2 relative">
+//                         <div>
+//                             <div className="text-[12px] text-white/50 mb-[-3px]">Price</div>
+//                             <div className="text-lg font-semibold">₹{itemData.price}</div>
+//                         </div>
+//                         <div className='absolute bottom-0 right-0'>
+
+//                         {currentQuatity > 0
+//                             ? <QuantityControl
+//                             item={itemData}
+//                             handleQuantityChange={handleQuantityChange}
+//                             handleRemoveItem={handleRemoveItem}
+//                             quantity={currentQuatity} 
+//                             value ={0} />
+                            
+//                             :
+//                             <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer transition-colors active:scale-90 duration-500 ease-in-out "
+//                             onClick={() => addToCart(itemData)}> 
+//                                 ADD 
+//                             </button>}
+//                         </div>
+
+//                     </div>
+//                 </div>
+//             </div>
+//         </>
+//     )
+// }
+
+// export default OrderComponets
+
+
+
+import React from 'react';
 import QuantityControl from './QuantityControl';
 
-
-// 1. Fixed typo: changed 'iteamData' to 'itemData'
-function OrderComponets({ itemData, addToCart, currentQuatity ,handleQuantityChange,handleRemoveItem}) 
-{
+// Fixed typo: 'iteamData' to 'itemData'
+function OrderComponets({ itemData, addToCart, currentQuatity, handleQuantityChange, handleRemoveItem }) {
 
     const spiceIcons = {
         "Mild": "🌶️",
@@ -12,68 +97,79 @@ function OrderComponets({ itemData, addToCart, currentQuatity ,handleQuantityCha
         "Hot": "🌶️🌶️🌶️"
     };
 
-
-    // Safety check: If data hasn't loaded yet, don't break the app
+    // Safety check
     if (!itemData) return null;
 
     return (
         <>
-            <div className="border bg-BrightWritingColor/10 border-white/10 rounded-[15px] flex-col w-86 cursor-pointer">
+            {/* RESPONSIVE CONTAINER:
+                1. w-full: Fills the screen width on mobile (no more horizontal scrolling).
+                2. md:w-86: Locks to your fixed 344px width on desktop.
+                3. max-w-[400px]: Prevents it from getting TOO huge on large tablets if needed.
+            */}
+            <div className="border bg-BrightWritingColor/10 border-white/10 rounded-[15px] flex flex-col w-full md:w-86 cursor-pointer hover:border-white/20">
 
-                {/* 2. Dynamic Background Image */}
-                {/* We use style={{}} for dynamic images because Tailwind class names can't accept variables easily */}
+                {/* RESPONSIVE IMAGE AREA */}
+                {/* 1. w-full: Image matches the card width.
+                    2. h-[180px]: Made slightly taller on mobile for better visuals (optional, or keep 150px).
+                */}
                 <div
-                    className="h-[150px] w-86 flex bg-cover bg-center rounded-t-2xl border-none text-BrightWritingColor gap-3"
+                    className="h-[140px] md:h-[180px] md:h-[150px] w-full flex bg-cover bg-center rounded-t-[15px] border-none text-BrightWritingColor gap-3 relative"
                     style={{ backgroundImage: `url(${itemData.image})` }}
-                // style={{ backgroundImage: `url(${'muttonCurryPhoto.jpg'})`, backgroundSize: 'fit' }}
                 >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-[15px]"></div>
 
-                    {/* Dynamic Category */}
-                    <div className="bg-black/40 h-fit m-1 ml-3 p-1 px-2 rounded-md text-[12px] cursor-pointer hover:bg-black/90 backdrop-blur-sm">
+                    <div className="relative z-10 bg-black/40 h-fit m-1 ml-3 p-1 px-2 rounded-md text-[12px] cursor-pointer hover:bg-black/90 backdrop-blur-sm mt-3">
                         {itemData.category}
                     </div>
 
-                    {/* Dynamic Spice Level (Only shows if spiceLevel exists) */}
                     {itemData.spiceLevel && (
-                        <div className="bg-black/40 h-fit m-1 p-1 px-2 rounded-md text-[12px] hover:bg-black/90 backdrop-blur-sm flex items-center gap-1 cursor-pointer">
+                        <div className="relative z-10 bg-black/40 h-fit m-1 p-1 px-2 rounded-md text-[12px] hover:bg-black/90 backdrop-blur-sm flex items-center gap-1 cursor-pointer mt-3">
                             {itemData.spiceLevel} {spiceIcons[itemData.spiceLevel]}
                         </div>
                     )}
                 </div>
 
-                <div className="text-BrightWritingColor box-content flex p-4 flex-col gap-2">
-                    {/* 3. Dynamic Name */}
-                    <div className="text-[20px] font-medium leading-tight">
+                <div className="text-BrightWritingColor box-border flex p-4 flex-col gap-2 flex-1">
+                    
+
+                    <div className="text-lg md:text-[20px] font-medium leading-tight">
                         {itemData.name}
                     </div>
 
-                    {/* Dynamic Description */}
                     <div className="text-[13px] text-lightWritingColor h-10 overflow-hidden text-ellipsis line-clamp-2">
                         {itemData.description}
                     </div>
 
-                    <div className="flex justify-between items-center mt-2 relative">
+            
+                    <div className="flex justify-between items-end mt-2 h-8 md:h-12 relative"> 
                         <div>
-                            <div className="text-[12px] text-white/50 mb-[-3px]">Price</div>
+                            <div className="text-[12px] text-white/50 mb-[-2px]">Price</div>
                             <div className="text-lg font-semibold">₹{itemData.price}</div>
                         </div>
-                        <div className='absolute bottom-0 right-0'>
 
-                        {currentQuatity > 0
-                            ? <QuantityControl
-                            item={itemData}
-                            handleQuantityChange={handleQuantityChange}
-                            handleRemoveItem={handleRemoveItem}
-                            quantity={currentQuatity} 
-                            value ={0} />
-                            
-                            :
-                            <button className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 p-3 rounded-full px-5 text-[15px] font-medium cursor-pointer transition-colors active:scale-90 duration-500 ease-in-out "
-                            onClick={() => addToCart(itemData)}> 
-                                ADD 
-                            </button>}
+
+                        <div className="">
+                            {currentQuatity > 0 ? (
+                                <QuantityControl
+                                    item={itemData}
+                                    handleQuantityChange={handleQuantityChange}
+                                    handleRemoveItem={handleRemoveItem}
+                                    quantity={currentQuatity}
+                                    value={0} 
+                                />
+                            ) : (
+                                <button 
+                                    className="bg-[rgb(214,58,31)] hover:bg-orange-700/90 py-2 px-6 md:p-3 md:px-5 rounded-full text-sm md:text-[15px] font-medium cursor-pointer  active:scale-95 shadow-lg shadow-orange-900/20"
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // Prevents clicking the card background
+                                        addToCart(itemData);
+                                    }}
+                                >
+                                    ADD
+                                </button>
+                            )}
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -81,4 +177,4 @@ function OrderComponets({ itemData, addToCart, currentQuatity ,handleQuantityCha
     )
 }
 
-export default OrderComponets
+export default OrderComponets;

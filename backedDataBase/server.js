@@ -4,20 +4,23 @@ const app = express();
 const PORT = 5000;
 
 // Allow your React app to talk to this server
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+    origin: "*", // Allow ALL devices to connect (Easiest for testing)
+}));
 app.use('/images', express.static('images'));
 
 const menuData = [
-  // --- STARTERS (Smokey Dry Manches) ---
+  // --- Chicken (Smokey Dry Manches) ---
   {
     id: 1,
     name: "Chicken Tangdi Kabab (2 pcs)",
     description: "Succulent chicken drumsticks marinated in aromatic spices and roasted in the tandoor.",
     price: 220,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Medium",
-    // image: "./images/chicken-tanged-kabab.webp",
-    image: "http://localhost:5000/images/chicken-tanged-kabab.webp",
+    image: "./images/chicken-tanged-kabab.webp",
+    // image: "http://localhost:5000/images/chicken-tanged-kabab.webp",
     isVeg: false
   },
   {
@@ -25,7 +28,7 @@ const menuData = [
     name: "Peri Peri Chicken Tikka (8 pcs)",
     description: "Juicy chicken chunks marinated in fiery peri-peri spices and charcoal grilled.",
     price: 250,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Hot",
     image: "/images/peri-peri-tikka.jpg",
     isVeg: false
@@ -35,7 +38,7 @@ const menuData = [
     name: "Pahadi Chicken Tikka (8 pcs)",
     description: "Chicken marinated in a fresh green herb paste of mint, coriander, and chilies.",
     price: 250,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Medium",
     image: "/images/pahadi-tikka.jpg",
     isVeg: false
@@ -45,7 +48,7 @@ const menuData = [
     name: "Lemon Chicken Tikka (8 pcs)",
     description: "Zesty and tangy chicken tikka with a refreshing burst of lemon and mild spices.",
     price: 250,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/lemon-tikka.jpg",
     isVeg: false
@@ -55,7 +58,7 @@ const menuData = [
     name: "Multani Chicken Tikka (8 pcs)",
     description: "Aromatic chicken kababs spiced with traditional Multani herbs and roasted to perfection.",
     price: 250,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Medium",
     image: "/images/multani-tikka.jpg",
     isVeg: false
@@ -65,7 +68,7 @@ const menuData = [
     name: "Afghani Tangdi Kabab (2 pcs)",
     description: "Rich and creamy chicken drumsticks marinated in cashew paste and mild spices.",
     price: 250,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/afghani-tangdi.jpg",
     isVeg: false
@@ -75,7 +78,7 @@ const menuData = [
     name: "Malai Chicken Tikka (8 pcs)",
     description: "Melt-in-your-mouth chicken marinated in cream, cheese, and cardamom.",
     price: 300,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/malai-tikka.jpg",
     isVeg: false
@@ -85,7 +88,7 @@ const menuData = [
     name: "Afghani Chicken Tikka (8 pcs)",
     description: "Tender chicken chunks in a rich, white creamy marinade, grilled in the tandoor.",
     price: 300,
-    category: "Starters",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/afghani-tikka.jpg",
     isVeg: false
@@ -95,7 +98,7 @@ const menuData = [
     name: "Fish Fry (4 pcs)",
     description: "Crispy fried fish fillets coated in a spicy, homestyle masala blend.",
     price: 220,
-    category: "Seafood Starter",
+    category: "Seafood",
     spiceLevel: "Medium",
     image: "/images/fish-fry.jpg",
     isVeg: false
@@ -105,7 +108,7 @@ const menuData = [
     name: "Jinga Fry (8-9 pcs)",
     description: "Fresh prawns marinated in spices and shallow fried until golden and crispy.",
     price: 300,
-    category: "Seafood Starter",
+    category: "Seafood",
     spiceLevel: "Medium",
     image: "/images/jinga-fry.jpg",
     isVeg: false
@@ -221,7 +224,7 @@ const menuData = [
     name: "Butter Chicken Curry (Boneless)",
     description: "Classic tandoori chicken simmered in a rich, creamy tomato and butter gravy.",
     price: 250,
-    category: "Signature Mains",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/butter-chicken.jpg",
     isVeg: false
@@ -231,7 +234,7 @@ const menuData = [
     name: "Chicken Lababdar (Boneless)",
     description: "A rich, Mughlai-style gravy with capsicum and onion, slightly tangy and creamy.",
     price: 250,
-    category: "Signature Mains",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/chicken-lababdar.jpg",
     isVeg: false
@@ -241,7 +244,7 @@ const menuData = [
     name: "Chicken Kadhai",
     description: "Chicken tossed with bell peppers and onions in a spicy tomato-based masala.",
     price: 250,
-    category: "Signature Mains",
+    category: "Chicken",
     spiceLevel: "Medium",
     image: "/images/chicken-kadhai.jpg",
     isVeg: false
@@ -251,7 +254,7 @@ const menuData = [
     name: "Chicken Angara (Boneless)",
     description: "Smokey and spicy chicken curry with a distinct charcoal flavor.",
     price: 250,
-    category: "Signature Mains",
+    category: "Chicken",
     spiceLevel: "Hot",
     image: "/images/chicken-angara.jpg",
     isVeg: false
@@ -261,7 +264,7 @@ const menuData = [
     name: "Chicken Tikka Masala (Boneless)",
     description: "Roasted chicken tikka chunks cooked in a spiced, orange-red curry sauce.",
     price: 280,
-    category: "Signature Mains",
+    category: "Chicken",
     spiceLevel: "Medium",
     image: "/images/tikka-masala.jpg",
     isVeg: false
@@ -271,7 +274,7 @@ const menuData = [
     name: "Chicken Mughlai (Boneless)",
     description: "A royal, thick, and creamy egg-based gravy with mild spices.",
     price: 280,
-    category: "Signature Mains",
+    category: "Chicken",
     spiceLevel: "Mild",
     image: "/images/chicken-mughlai.jpg",
     isVeg: false
@@ -345,7 +348,7 @@ const menuData = [
     name: "Chicken Dum Biryani",
     description: "Aromatic basmati rice and chicken layered and slow-cooked on dum.",
     price: 220,
-    category: "Biryani",
+    category: "Biryani / Rice Bowls",
     spiceLevel: "Medium",
     image: "/images/chicken-dum.jpg",
     isVeg: false
@@ -355,7 +358,7 @@ const menuData = [
     name: "Mutton Dum Biryani",
     description: "Flavorful biryani with tender mutton pieces and whole spices.",
     price: 300,
-    category: "Biryani",
+    category: "Biryani / Rice Bowls",
     spiceLevel: "Medium",
     image: "/images/mutton-dum.jpg",
     isVeg: false
@@ -365,7 +368,7 @@ const menuData = [
     name: "Egg Dum Biryani (4 Eggs)",
     description: "Spiced rice layered with boiled and fried eggs.",
     price: 300,
-    category: "Biryani",
+    category: "Biryani / Rice Bowls",
     spiceLevel: "Medium",
     image: "/images/egg-biryani.jpg",
     isVeg: false
@@ -375,7 +378,7 @@ const menuData = [
     name: "Chicken Fried Rice",
     description: "Wok-tossed rice with chicken chunks, eggs, and veggies.",
     price: 230,
-    category: "Chinese Rice",
+    category: "Chinese",
     spiceLevel: "Mild",
     image: "/images/chicken-fried-rice.jpg",
     isVeg: false
@@ -385,7 +388,7 @@ const menuData = [
     name: "Chicken Schezwan Fried Rice",
     description: "Spicy fried rice tossed in house-made Schezwan sauce.",
     price: 250,
-    category: "Chinese Rice",
+    category: "Chinese",
     spiceLevel: "Hot",
     image: "/images/schezwan-rice.jpg",
     isVeg: false
@@ -395,7 +398,7 @@ const menuData = [
     name: "Chicken Garlic Butter Rice",
     description: "Fragrant rice tossed with plenty of garlic and butter.",
     price: 250,
-    category: "Chinese Rice",
+    category: "Chinese",
     spiceLevel: "Mild",
     image: "/images/garlic-rice.jpg",
     isVeg: false
@@ -405,7 +408,7 @@ const menuData = [
     name: "Jinga Pulav",
     description: "Aromatic pilaf rice cooked with fresh prawns.",
     price: 380,
-    category: "Biryani/Rice",
+    category: "Seafood",
     spiceLevel: "Medium",
     image: "/images/jinga-pulav.jpg",
     isVeg: false
@@ -415,13 +418,13 @@ const menuData = [
     name: "Jeera Rice",
     description: "Basmati rice tempered with cumin seeds.",
     price: 50,
-    category: "Biryani/Rice",
+    category: "Sides",
     spiceLevel: "Mild",
     image: "/images/jeera-rice.jpg",
     isVeg: true
   },
 
-  // --- CHINESE STARTERS ---
+  // --- CHINESE Chicken ---
   {
     id: 41,
     name: "Chicken Leg Fry (2 pcs)",
@@ -473,13 +476,13 @@ const menuData = [
     isVeg: false
   },
 
-  // --- RICE BOWLS ---
+  // --- Briyani / Rice Bowls ---
   {
     id: 46,
     name: "Chicken Curry Rice Bowl (2 pcs)",
     description: "Comfort in a bowl: Chicken curry served over steamed rice.",
     price: 150,
-    category: "Rice Bowls",
+    category: "Briyani / Rice Bowls",
     spiceLevel: "Medium",
     image: "/images/bowl-curry.jpg",
     isVeg: false
@@ -489,7 +492,7 @@ const menuData = [
     name: "Butter Chicken Rice Bowl (2 pcs)",
     description: "Creamy butter chicken served over a bed of fragrant rice.",
     price: 200,
-    category: "Rice Bowls",
+    category: "Briyani / Rice Bowls",
     spiceLevel: "Mild",
     image: "/images/bowl-butter.jpg",
     isVeg: false
@@ -499,7 +502,7 @@ const menuData = [
     name: "Chicken Angara Rice Bowl (2 pcs)",
     description: "Smokey spicy chicken angara served with rice.",
     price: 200,
-    category: "Rice Bowls",
+    category: "Briyani / Rice Bowls",
     spiceLevel: "Hot",
     image: "/images/bowl-angara.jpg",
     isVeg: false
@@ -509,7 +512,7 @@ const menuData = [
     name: "Mutton Curry Rice Bowl (2 pcs)",
     description: "Tender mutton curry served with steamed rice.",
     price: 200,
-    category: "Rice Bowls",
+    category: "Briyani / Rice Bowls",
     spiceLevel: "Medium",
     image: "/images/bowl-mutton.jpg",
     isVeg: false
@@ -612,6 +615,14 @@ app.get('/api/menu', (req, res) => {
   res.json(menuData);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
+
+// app.listen(PORT, "0.0.0.0", () => {
+//   console.log("Server running on Network!");
+// });
+
+app.listen(5000, '0.0.0.0', () => {
+  console.log('Server is running on Port 5000');
 });
