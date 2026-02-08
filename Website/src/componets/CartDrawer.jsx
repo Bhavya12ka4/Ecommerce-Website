@@ -13,7 +13,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, han
     name: '',
     phone: '',
     address: '',
-    note: '' // 👈 New Field
+    note: '' 
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
