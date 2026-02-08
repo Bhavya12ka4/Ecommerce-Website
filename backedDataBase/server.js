@@ -7,11 +7,30 @@ const app = express();
 
 // Middleware
 // app.use(cors());
+// app.use(cors({
+//     origin: 'https://ecommerce-website-eta.vercel.app', // Allows your Vercel site to access the backend
+//     methods: ['GET', 'POST'],
+//     allowedHeaders: ['Content-Type']
+// }));
+
+const allowedOrigins = [
+  'https://ecommerce-website-eta.vercel.app',
+  'https://kook-du-ku-curries.onrender.com' // Add your Render URL here
+];
+
 app.use(cors({
-    origin: 'https://ecommerce-website-eta.vercel.app', // Allows your Vercel site to access the backend
-    methods: ['GET', 'POST'],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            return callback(new Error('CORS policy violation Thai Che Toppa'), false);
+        }
+        return callback(null, true);
+    },
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type']
 }));
+
 app.use(express.json());
 app.use('/images', express.static('images'));
 
@@ -129,4 +148,12 @@ app.patch('/api/orders/:id/status', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Failed to update status" });
     }
+});
+
+// Serve Frontend Static Files (If you are hosting both on Render)
+app.use(express.static(path.join(__dirname, '../frontend/dist'))); 
+
+// Fallback for React Router
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
