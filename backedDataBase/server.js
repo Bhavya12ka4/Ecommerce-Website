@@ -165,6 +165,10 @@ app.patch('/api/orders/:id/status', async (req, res) => {
 app.use(express.static(path.join(__dirname, '../Website/dist')));
 
 // 2. Handle React Router (This MUST be the last route in your file)
-app.get('*', (req, res) => {
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
+// });
+
+app.get('(.*)', (req, res) => {
     res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
 });
