@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 
 const app = express();
 
@@ -162,12 +162,12 @@ app.patch('/api/orders/:id/status', async (req, res) => {
 
 // 1. Serve static files from the 'Website/dist' folder
 // Based on your Image 4 structure, 'Website' is a sibling to your backend files
-app.use(express.static(path.join(__dirname, '../Website/dist')));
+// app.use(express.static(path.join(__dirname, '../Website/dist')));
 
-// 2. Handle React Router (This MUST be the last route in your file)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
-});
+// // 2. Handle React Router (This MUST be the last route in your file)
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
+// });
 
 // app.get('(.*)', (req, res) => {
 //     res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
