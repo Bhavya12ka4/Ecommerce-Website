@@ -185,10 +185,8 @@ import React, { useState, useEffect } from 'react';
 import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive } from 'lucide-react';
 
 function AdminOrders() {
-    // ⚠️ USE YOUR LAPTOP IP or LIVE URL
-    // const API_URL = "https://ecommerce-website-pzib.onrender.com";
-    // Replace the hardcoded URL with this:
-    const API_URL = window.location.origin;
+
+    const API_URL = "https://ecommerce-website-pzib.onrender.com";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -259,8 +257,8 @@ function AdminOrders() {
                             key={status}
                             onClick={() => setActiveTab(status)}
                             className={`px-6 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${activeTab === status
-                                ? "bg-orange-600 text-white shadow-lg"
-                                : "text-gray-400 hover:text-white hover:bg-white/5"
+                                    ? "bg-orange-600 text-white shadow-lg"
+                                    : "text-gray-400 hover:text-white hover:bg-white/5"
                                 }`}
                         >
                             {status}
