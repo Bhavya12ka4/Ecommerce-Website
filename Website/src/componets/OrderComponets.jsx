@@ -186,7 +186,7 @@ import QuantityControl from './QuantityControl';
 function OrderComponets({ itemData, addToCart, currentQuatity, handleQuantityChange, handleRemoveItem }) {
 
     // ⚠️ CRITICAL: Must match your backend IP
-    const API_URL = "https://ecommerce-website-pzib.onrender.com/app/menu";
+    const API_URL = "https://ecommerce-website-pzib.onrender.com";
 
     const spiceIcons = {
         "Mild": "🌶️",
