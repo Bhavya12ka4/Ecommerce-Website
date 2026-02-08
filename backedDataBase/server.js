@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -14,21 +15,21 @@ const app = express();
 // }));
 
 const allowedOrigins = [
-  'https://ecommerce-website-eta.vercel.app',
-  'https://kook-du-ku-curries.onrender.com' // Add your Render URL here
+    'https://ecommerce-website-eta.vercel.app', 
+    'https://kook-du-ku-curries.onrender.com'
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            return callback(new Error('CORS policy violation Thai Che Toppa'), false);
+        // Allow requests with no origin (like mobile apps) or matched origins
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
         }
-        return callback(null, true);
     },
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    credentials: true
 }));
 
 app.use(express.json());
@@ -150,10 +151,20 @@ app.patch('/api/orders/:id/status', async (req, res) => {
     }
 });
 
-// Serve Frontend Static Files (If you are hosting both on Render)
-app.use(express.static(path.join(__dirname, '../frontend/dist'))); 
+// // Serve Frontend Static Files (If you are hosting both on Render)
+// app.use(express.static(path.join(__dirname, '../frontend/dist'))); 
 
-// Fallback for React Router
+// // Fallback for React Router
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+// });
+
+
+// 1. Serve static files from the 'Website/dist' folder
+// Based on your Image 4 structure, 'Website' is a sibling to your backend files
+app.use(express.static(path.join(__dirname, '../Website/dist')));
+
+// 2. Handle React Router (This MUST be the last route in your file)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
 });
