@@ -353,7 +353,7 @@ import { X, ShoppingBag, ArrowLeft, CheckCircle, User, MapPin } from 'lucide-rea
 const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, handleRemoveItem, scrollToSection, clearCart }) => {
 
   // ⚠️ USE YOUR LIVE URL (or Laptop IP if testing locally)
-  const API_URL = "https://ecommerce-website-pzib.onrender.com";
+  const API_URL = "https://ecommerce-website-pzib.onrender.com/app/menu";
 
   const [view, setView] = useState('cart');
 

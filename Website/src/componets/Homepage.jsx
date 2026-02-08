@@ -224,7 +224,7 @@ function Homepage() {
         fetch(`${API_URL}/api/menu`) // ✅ Uses the correct backend IP
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error('Failed to fetch menu data');
+                    throw new Error('Failed to fetch menu data and I love you');
                 }
                 return response.json();
             })
@@ -233,7 +233,7 @@ function Homepage() {
                 setLoading(false);  
             })
             .catch((err) => {
-                console.error("Error fetching data:", err);
+                console.error("Error fetching data: And I hate you: ", err);
                 setError(err.message);
                 setLoading(false);
             });
