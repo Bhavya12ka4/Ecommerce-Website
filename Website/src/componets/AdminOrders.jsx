@@ -186,7 +186,7 @@ import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive } from 'lucide
 
 function AdminOrders() {
     // ⚠️ USE YOUR LAPTOP IP or LIVE URL
-    const API_URL = "https://kookduku-backend.onrender.com";
+    const API_URL = "https://ecommerce-website-pzib.onrender.com";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
