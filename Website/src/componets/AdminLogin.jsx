@@ -8,7 +8,7 @@ function AdminLogin({ onLogin }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // 🔒 CHANGE THIS PASSWORD TO WHATEVER YOU WANT
-        if (password === "admin123") {
+        if (password === import.meta.env.VITE_PASSWORD) {
             onLogin(); // Unlock the door!
         } else {
             setError(true);
