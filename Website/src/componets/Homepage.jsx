@@ -163,8 +163,8 @@ import { Loader } from "lucide-react";
 import FooterSection from "./FooterSection.jsx";
 
 function Homepage() {
-    // ⚠️ CRITICAL: Must match your computer's IP for phone testing
-    const API_URL = "http://localhost:5000";
+    // ⚠️ CRITICAL: Uses deployed backend in production, localhost for testing
+    const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
 
     const [menuItems, setMenuItems] = useState([]);
     const [loading, setLoading] = useState(true);

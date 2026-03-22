@@ -3,7 +3,7 @@ import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive, Bell } from '
 
 function AdminOrders() {
 
-    const API_URL = "http://localhost:5000";
+    const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);

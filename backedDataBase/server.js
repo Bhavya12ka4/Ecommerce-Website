@@ -181,13 +181,7 @@ app.get('/api/orders', async (req, res) => {
     }
 });
 
-// Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server running on Port ${PORT}`);
-});
-
-// --- NEW ROUTE: Update Order Status ---
+// --- UPDATE ORDER STATUS ---
 app.patch('/api/orders/:id/status', async (req, res) => {
     try {
         const { status } = req.body;
@@ -196,11 +190,20 @@ app.patch('/api/orders/:id/status', async (req, res) => {
             { status: status },
             { new: true } // Return the updated document
         );
-        res.json(updatedOrder);
+        if (!updatedOrder) {
+            return res.status(404).json({ error: "Order not found" });
+        }
         console.log(`🔄 Order Status Updated: ${status}`);
+        res.json(updatedOrder);
     } catch (err) {
         res.status(500).json({ error: "Failed to update status" });
     }
+});
+
+// Start Server (MUST be last, after all routes)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on Port ${PORT}`);
 });
 
 // // Serve Frontend Static Files (If you are hosting both on Render)

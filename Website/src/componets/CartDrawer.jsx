@@ -5,7 +5,7 @@ import { X, ShoppingBag, ArrowLeft, CheckCircle, User, MapPin } from 'lucide-rea
 const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, handleRemoveItem, scrollToSection, clearCart }) => {
 
   // ⚠️ TEMPORARY LOCAL TESTING URL
-  const API_URL = "http://localhost:5000";
+  const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
 
   const [view, setView] = useState('cart');
 
