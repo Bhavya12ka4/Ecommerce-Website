@@ -4,17 +4,20 @@ import { X, ShoppingBag, ArrowLeft, CheckCircle, User, MapPin } from 'lucide-rea
 
 const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, handleRemoveItem, scrollToSection, clearCart }) => {
 
-  // ⚠️ USE YOUR LIVE URL (or Laptop IP if testing locally)
-  const API_URL = "https://ecommerce-website-pzib.onrender.com";
+  // ⚠️ TEMPORARY LOCAL TESTING URL
+  const API_URL = "http://localhost:5000";
 
   const [view, setView] = useState('cart');
 
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    password: '',
     address: '',
-    note: '' 
+    note: ''
   });
+
+  const [isLoginView, setIsLoginView] = useState(true);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,6 +43,43 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, han
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAuthSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.phone || !formData.password || (!isLoginView && !formData.name)) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    const endpoint = isLoginView ? '/api/customers/login' : '/api/customers/register';
+    
+    try {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          name: formData.name, 
+          phone: formData.phone, 
+          password: formData.password 
+        })
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        localStorage.setItem("customerData", JSON.stringify({ name: data.user.name, phone: data.user.phone }));
+        setFormData(prev => ({ ...prev, name: data.user.name, phone: data.user.phone }));
+        setView('checkout');
+      } else {
+        alert(data.error || "Authentication failed.");
+      }
+    } catch (error) {
+      console.error("Auth Error:", error);
+      alert("Server error. Check connection.");
+    }
+    setIsSubmitting(false);
   };
 
   const handlePlaceOrder = async (e) => {
@@ -101,12 +141,19 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, han
         {/* HEADER (Fixed at Top) */}
         <div className="flex-none flex items-center justify-between p-4 border-b border-zinc-800 bg-zinc-900">
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            {view === 'checkout' && (
-              <button onClick={() => setView('cart')} className="mr-2 text-gray-400 hover:text-white">
+            {(view === 'checkout' || view === 'auth' || view === 'payment') && (
+              <button
+                onClick={() => {
+                  if (view === 'auth') setView('cart');
+                  if (view === 'checkout') setView('auth');
+                  if (view === 'payment') setView('checkout');
+                }}
+                className="mr-2 text-gray-400 hover:text-white"
+              >
                 <ArrowLeft size={20} />
               </button>
             )}
-            {view === 'cart' ? 'Your Cart' : view === 'checkout' ? 'Details' : 'Done'}
+            {view === 'cart' ? 'Your Cart' : view === 'auth' ? 'Login' : view === 'checkout' ? 'Details' : view === 'payment' ? 'Payment' : 'Done'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white p-2"><X size={24} /></button>
         </div>
@@ -151,28 +198,42 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, han
               onChange={handleInputChange}
             ></textarea>
           </div>
-          {/* VIEW 2: CHECKOUT FORM */}
-          {view === 'checkout' && (
-            <form id="checkout-form" onSubmit={handlePlaceOrder} className="space-y-4 pb-4">
-
+          {/* VIEW 2: AUTH FORM */}
+          {view === 'auth' && (
+            <form id="auth-form" onSubmit={handleAuthSubmit} className="space-y-4 pb-4">
               <div className="bg-zinc-800/30 p-4 rounded-xl border border-zinc-700/50 space-y-3">
-                <div className="flex items-center gap-2 text-orange-500 font-bold text-sm">
-                  <User size={16} /> Personal Info
+                <div className="flex items-center justify-between text-orange-500 font-bold text-sm">
+                  <span className="flex items-center gap-2"><User size={16} /> {isLoginView ? "Login" : "Create Account"}</span>
+                  <button type="button" onClick={() => setIsLoginView(!isLoginView)} className="text-xs text-gray-400 hover:text-white underline">
+                    {isLoginView ? "Need an account? Sign Up" : "Already have one? Login"}
+                  </button>
                 </div>
-                <input required type="text" name="name"
-                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white focus:border-orange-500 outline-none"
-                  placeholder="Name" value={formData.name} onChange={handleInputChange}
-                />
+                
+                {!isLoginView && (
+                  <input required type="text" name="name"
+                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white focus:border-orange-500 outline-none"
+                    placeholder="Your Name" value={formData.name} onChange={handleInputChange}
+                  />
+                )}
                 <input required type="tel" name="phone"
                   className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white focus:border-orange-500 outline-none"
-                  placeholder="Phone Number" value={formData.phone} onChange={handleInputChange}
+                  placeholder="Phone Number (10 digits)" value={formData.phone} onChange={handleInputChange}
+                />
+                <input required type="password" name="password"
+                  className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white focus:border-orange-500 outline-none"
+                  placeholder="Password" value={formData.password} onChange={handleInputChange}
                 />
               </div>
+            </form>
+          )}
 
+          {/* VIEW 3: CHECKOUT FORM */}
+          {view === 'checkout' && (
+            <form id="checkout-form" onSubmit={(e) => { e.preventDefault(); if (formData.address) setView('payment'); else alert("Enter address"); }} className="space-y-4 pb-4">
               <div className="bg-zinc-800/30 p-4 rounded-xl border border-zinc-700/50 space-y-3">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2 text-orange-500 font-bold text-sm">
-                    <MapPin size={16} /> Address
+                    <MapPin size={16} /> Delivery Address
                   </div>
                   {formData.address && (
                     <button type="button" onClick={() => setFormData(prev => ({ ...prev, address: '' }))}
@@ -186,13 +247,37 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, han
                   value={formData.address} onChange={handleInputChange}
                 ></textarea>
               </div>
-
-              {/* Total Bill is now here in the scroll flow too, for clarity */}
-              <div className="flex justify-between items-center px-2 pt-2">
-                <span className="text-gray-400 text-sm">Total Amount</span>
-                <span className="text-xl font-bold text-white">₹{totalAmount}</span>
-              </div>
             </form>
+          )}
+
+          {/* VIEW 4: PAYMENT FORM (UPI) */}
+          {view === 'payment' && (
+            <div className="space-y-4 pb-4 animate-fade-in text-center">
+              <div className="bg-zinc-800/50 p-6 rounded-2xl border border-orange-500/50 space-y-4">
+                <h3 className="text-xl font-bold text-white">Pay via UPI</h3>
+                <p className="text-gray-400 text-sm">Scan the QR code below with Google Pay, PhonePe, or Paytm.</p>
+
+                <div className="bg-white p-4 rounded-xl inline-block shadow-lg mx-auto">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9227090407@axl%26pn=Store%26am=${totalAmount}%26cu=INR`}
+                    alt="UPI QR Code"
+                    className="w-48 h-48"
+                  />
+                </div>
+
+                <div className="text-2xl font-bold text-orange-500 my-4">₹{totalAmount}</div>
+
+                <p className="text-xs text-gray-500">Or use this number manually: <span className="text-white font-mono">9227090407</span></p>
+
+                {/* Mobile Deep Link */}
+                <a
+                  href={`upi://pay?pa=9227090407@axl&pn=Store&am=${totalAmount}&cu=INR`}
+                  className="block md:hidden w-full bg-zinc-900 border border-zinc-700 text-white font-bold py-3 rounded-xl mt-4 active:scale-95"
+                >
+                  Open UPI App
+                </a>
+              </div>
+            </div>
           )}
 
           {/* VIEW 3: SUCCESS */}
@@ -213,20 +298,38 @@ const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, han
             {view === 'cart' ? (
               <button
                 key="btn-cart"
-                onClick={() => setView('checkout')}
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95"
+                onClick={() => setView('auth')}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-transform"
               >
-                Checkout • ₹{totalAmount}
+                Login to Checkout • ₹{totalAmount}
+              </button>
+            ) : view === 'auth' ? (
+              <button
+                key="btn-auth"
+                form="auth-form"
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-transform disabled:opacity-50"
+              >
+                {isSubmitting ? "Authenticating..." : isLoginView ? "Login to Continue" : "Sign Up to Continue"}
               </button>
             ) : view === 'checkout' ? (
               <button
                 key="btn-checkout"
                 form="checkout-form"
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 disabled:opacity-50"
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-transform"
               >
-                {isSubmitting ? "Sending..." : `Confirm Order - ₹${totalAmount}`}
+                Proceed to Payment
+              </button>
+            ) : view === 'payment' ? (
+              <button
+                key="btn-payment"
+                onClick={handlePlaceOrder}
+                disabled={isSubmitting}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 disabled:opacity-50 transition-transform flex items-center justify-center gap-2"
+              >
+                {isSubmitting ? "Processing..." : <> <CheckCircle size={20} /> I have paid ₹{totalAmount} </>}
               </button>
             ) : null}
           </div>

@@ -15,7 +15,7 @@ const app = express();
 // }));
 
 const allowedOrigins = [
-    'https://ecommerce-website-eta.vercel.app', 
+    'https://ecommerce-website-eta.vercel.app',
     'https://kook-du-ku-curries.onrender.com',
     'http://localhost:5173'
 ];
@@ -74,6 +74,15 @@ const orderSchema = new mongoose.Schema({
 });
 const Order = mongoose.model('Order', orderSchema);
 
+// --- 3. CUSTOMER SCHEMA (New!) ---
+const customerSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    phone: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+const Customer = mongoose.model('Customer', customerSchema);
+
 
 // --- ROUTES ---
 
@@ -101,6 +110,48 @@ app.post('/api/orders', async (req, res) => {
     }
 });
 
+// --- CUSTOMER AUTH ROUTES ---
+// 1. Register
+app.post('/api/customers/register', async (req, res) => {
+    try {
+        const { name, phone, password } = req.body;
+        
+        // Check if phone already exists
+        const existingCustomer = await Customer.findOne({ phone });
+        if (existingCustomer) {
+            return res.status(400).json({ error: "Phone number already registered" });
+        }
+
+        const newCustomer = new Customer({ name, phone, password });
+        await newCustomer.save();
+        
+        res.status(201).json({ message: "Registration successful!", user: { name: newCustomer.name, phone: newCustomer.phone } });
+    } catch (err) {
+        console.error("Register Error:", err);
+        res.status(500).json({ error: "Registration failed" });
+    }
+});
+
+// 2. Login
+app.post('/api/customers/login', async (req, res) => {
+    try {
+        const { phone, password } = req.body;
+        
+        const customer = await Customer.findOne({ phone });
+        if (!customer) {
+            return res.status(404).json({ error: "User not found. Please sign up." });
+        }
+
+        if (customer.password !== password) {
+            return res.status(401).json({ error: "Invalid password." });
+        }
+
+        res.json({ message: "Login successful!", user: { name: customer.name, phone: customer.phone } });
+    } catch (err) {
+        console.error("Login Error:", err);
+        res.status(500).json({ error: "Login failed" });
+    }
+});
 
 // --- GET ORDERS (Smart Filtering) ---
 app.get('/api/orders', async (req, res) => {
@@ -110,7 +161,7 @@ app.get('/api/orders', async (req, res) => {
 
         if (type === 'active') {
             // Get everything EXCEPT 'Completed'
-            query = { status: { $ne: 'Completed' } }; 
+            query = { status: { $ne: 'Completed' } };
         } else if (type === 'history') {
             // Get ONLY 'Completed'
             query = { status: 'Completed' };
@@ -141,8 +192,8 @@ app.patch('/api/orders/:id/status', async (req, res) => {
     try {
         const { status } = req.body;
         const updatedOrder = await Order.findByIdAndUpdate(
-            req.params.id, 
-            { status: status }, 
+            req.params.id,
+            { status: status },
             { new: true } // Return the updated document
         );
         res.json(updatedOrder);
@@ -153,7 +204,7 @@ app.patch('/api/orders/:id/status', async (req, res) => {
 });
 
 // // Serve Frontend Static Files (If you are hosting both on Render)
-// app.use(express.static(path.join(__dirname, '../frontend/dist'))); 
+// app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 // // Fallback for React Router
 // app.get('*', (req, res) => {

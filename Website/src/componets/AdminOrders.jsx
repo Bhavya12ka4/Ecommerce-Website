@@ -1,17 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive, Bell } from 'lucide-react';
 
 function AdminOrders() {
 
-    const API_URL = "https://ecommerce-website-pzib.onrender.com";
+    const API_URL = "http://localhost:5000";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState("Pending");
+    const [newOrderAlert, setNewOrderAlert] = useState(false);
+    const prevPendingCount = useRef(null);
+    const ringInterval = useRef(null); // 👈 Holds the loop reference
+
+    // --- PLAY ONE LOUD RING CHIME ---
+    const playChime = () => {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const playBeep = (freq, startTime, duration) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'triangle'; // Louder, sharper sound
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(1.5, startTime); // 👈 Max volume
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                osc.start(startTime);
+                osc.stop(startTime + duration);
+            };
+            playBeep(1200, ctx.currentTime, 0.15);
+            playBeep(900, ctx.currentTime + 0.2, 0.15);
+            playBeep(1200, ctx.currentTime + 0.4, 0.15);
+            playBeep(900, ctx.currentTime + 0.6, 0.15);
+        } catch(e) {
+            console.warn('Audio not available:', e);
+        }
+    };
+
+    // --- START CONTINUOUS RINGING ---
+    const startRing = () => {
+        if (ringInterval.current) return; // Already ringing, don't start again
+        playChime(); // Play immediately
+        ringInterval.current = setInterval(playChime, 1500); // Then every 1.5s
+        setNewOrderAlert(true);
+    };
+
+    // --- STOP RINGING (called when admin picks an order) ---
+    const stopRing = () => {
+        if (ringInterval.current) {
+            clearInterval(ringInterval.current);
+            ringInterval.current = null;
+        }
+        setNewOrderAlert(false);
+    };
+
+    // Cleanup on unmount
+    useEffect(() => () => stopRing(), []);
 
     // SMART FETCH: Only gets what is needed
     const fetchOrders = () => {
-        // If we are on the "Completed" tab, ask for history. Otherwise, ask for active.
         const type = activeTab === "Completed" ? "history" : "active";
 
         fetch(`${API_URL}/api/orders?type=${type}`)
@@ -19,6 +66,17 @@ function AdminOrders() {
             .then(data => {
                 if (Array.isArray(data)) {
                     setOrders(data);
+
+                    // --- NEW ORDER DETECTION ---
+                    const pendingCount = data.filter(o => o.status === 'Pending').length;
+                    if (prevPendingCount.current !== null && pendingCount > prevPendingCount.current) {
+                        startRing(); // 👈 Start the continuous loop
+                    }
+                    // If no pending orders remain, stop ringing
+                    if (pendingCount === 0) {
+                        stopRing();
+                    }
+                    prevPendingCount.current = pendingCount;
                 } else {
                     setOrders([]);
                 }
@@ -28,6 +86,7 @@ function AdminOrders() {
     };
 
     const updateStatus = async (orderId, newStatus) => {
+        stopRing(); // 👈 Stop the alarm the moment admin touches any order
         try {
             const response = await fetch(`${API_URL}/api/orders/${orderId}/status`, {
                 method: 'PATCH',
@@ -63,6 +122,15 @@ function AdminOrders() {
     return (
         <div className="min-h-screen bg-zinc-900 text-white p-6 font-sans">
 
+            {/* --- NEW ORDER ALERT BANNER --- */}
+            {newOrderAlert && (
+                <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-orange-500 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-bounce">
+                    <Bell size={24} className="animate-ping absolute opacity-75" />
+                    <Bell size={24} className="relative" />
+                    🔔 New Order Received!
+                </div>
+            )}
+
             {/* --- HEADER --- */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-zinc-700 pb-4 gap-4">
                 <h1 className="text-3xl font-bold text-orange-500 flex items-center gap-2">
@@ -74,8 +142,8 @@ function AdminOrders() {
                             key={status}
                             onClick={() => setActiveTab(status)}
                             className={`px-6 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${activeTab === status
-                                    ? "bg-orange-600 text-white shadow-lg"
-                                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                                ? "bg-orange-600 text-white shadow-lg"
+                                : "text-gray-400 hover:text-white hover:bg-white/5"
                                 }`}
                         >
                             {status}
