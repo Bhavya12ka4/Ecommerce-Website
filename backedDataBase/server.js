@@ -16,7 +16,8 @@ const app = express();
 
 const allowedOrigins = [
     'https://ecommerce-website-eta.vercel.app', 
-    'https://kook-du-ku-curries.onrender.com'
+    'https://kook-du-ku-curries.onrender.com',
+    'http://localhost:5173'
 ];
 
 app.use(cors({

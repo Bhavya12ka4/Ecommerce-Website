@@ -3,7 +3,7 @@ import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive } from 'lucide
 
 function AdminOrders() {
 
-    const API_URL = window.location.origin
+    const API_URL = "https://ecommerce-website-pzib.onrender.com";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
