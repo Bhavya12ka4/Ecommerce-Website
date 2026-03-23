@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import QuantityControl from './QuantityControl';
 import { X, ShoppingBag, ArrowLeft, CheckCircle, User, MapPin } from 'lucide-react';
+import { API_URL } from '../apiConfig';
 
 const CartDrawer = ({ isOpen, onClose, cartItems = [], handleQuantityChange, handleRemoveItem, scrollToSection, clearCart }) => {
-
-  // ⚠️ TEMPORARY LOCAL TESTING URL
-  const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
 
   const [view, setView] = useState('cart');
 

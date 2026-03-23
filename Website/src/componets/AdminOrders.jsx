@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircle, Clock, Flame, PackageCheck, Filter, Archive, Bell } from 'lucide-react';
+import { API_URL } from '../apiConfig';
 
 function AdminOrders() {
 
-    const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);

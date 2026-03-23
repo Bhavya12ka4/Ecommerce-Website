@@ -161,10 +161,11 @@ import OrderComponets from "./OrderComponets.jsx";
 import React, { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
 import FooterSection from "./FooterSection.jsx";
+import { API_URL } from '../apiConfig';
 
 function Homepage() {
     // ⚠️ CRITICAL: Uses deployed backend in production, localhost for testing
-    const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
+    
 
     const [menuItems, setMenuItems] = useState([]);
     const [loading, setLoading] = useState(true);

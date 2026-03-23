@@ -182,11 +182,9 @@
 
 import React from 'react';
 import QuantityControl from './QuantityControl';
+import { API_URL } from '../apiConfig';
 
 function OrderComponets({ itemData, addToCart, currentQuatity, handleQuantityChange, handleRemoveItem }) {
-
-    // ⚠️ CRITICAL: Must match your backend IP
-  const API_URL = import.meta.env.PROD ? "https://kook-du-ku-curries.onrender.com" : "http://localhost:5000";
 
     const spiceIcons = {
         "Mild": "🌶️",

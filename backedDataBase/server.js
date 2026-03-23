@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-// const path = require('path');
+const path = require('path');
 
 const app = express();
 
@@ -206,13 +206,13 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server running on Port ${PORT}`);
 });
 
-// // Serve Frontend Static Files (If you are hosting both on Render)
-// app.use(express.static(path.join(__dirname, '../frontend/dist')));
+// Serve Static Files for Production
+app.use(express.static(path.join(__dirname, '../Website/dist')));
 
-// // Fallback for React Router
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-// });
+// Fallback for React Router (MUST be the last route)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Website/dist', 'index.html'));
+});
 
 
 // 1. Serve static files from the 'Website/dist' folder
